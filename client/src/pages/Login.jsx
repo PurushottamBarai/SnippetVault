@@ -43,30 +43,30 @@ export default function Login() {
 
   return (
     <div className="min-h-[calc(100vh-56px)] flex">
-      <div className="hidden lg:flex flex-col justify-between w-1/2 bg-[#09090b] text-[#fafafa] p-12 border-r border-[#27272a]">
+      <div className="hidden lg:flex flex-col justify-between w-1/2 bg-surface text-foreground p-12 border-r border-border">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-md bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-md bg-primary/10 text-primary border border-primary/20 flex items-center justify-center">
             <Code2 className="w-5 h-5" />
           </div>
           <span className="font-semibold text-[16px] tracking-tight">Snippet Vault</span>
         </div>
 
         <div className="space-y-4 max-w-md">
-          <h2 className="text-[28px] font-semibold tracking-tight text-white leading-tight">
+          <h2 className="text-[28px] font-semibold tracking-tight text-foreground leading-tight">
             Your code, <br />organised for you.
           </h2>
-          <p className="text-[14px] text-zinc-400 leading-relaxed">
+          <p className="text-[14px] text-muted leading-relaxed">
             Save snippets and notes. Get tags and a summary for each one automatically.
           </p>
 
-          <div className="rounded-lg bg-[#111113] border border-[#27272a] p-4 font-mono text-[12px] text-zinc-400 space-y-1 mt-6">
-            <div className="text-teal-400">// Automatically tagged & indexed</div>
-            <div className="text-zinc-200">const snippet = await vault.find('#jwt');</div>
-            <div className="text-zinc-500">// Returns verified auth middleware snippet</div>
+          <div className="rounded-lg bg-card border border-border p-4 font-mono text-[12px] text-muted space-y-1 mt-6">
+            <div className="text-primary">// Automatically tagged & indexed</div>
+            <div className="text-foreground">const snippet = await vault.find('#jwt');</div>
+            <div className="text-muted">// Returns verified auth middleware snippet</div>
           </div>
         </div>
 
-        <div className="text-[12px] text-zinc-500 font-mono">
+        <div className="text-[12px] text-muted font-mono">
           AES-256 encrypted cookies • Owner-isolated data
         </div>
       </div>

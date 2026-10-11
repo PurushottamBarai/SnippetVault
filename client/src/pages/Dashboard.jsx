@@ -16,7 +16,7 @@ import ConfirmDialog from '../components/ConfirmDialog';
 import { useToast } from '../context/ToastContext';
 import { getLanguageInfo } from '../lib/constants';
 
-export default function Dashboard({ searchQuery }) {
+export default function Dashboard({ searchQuery, onClearSearch }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const { showToast } = useToast();
 
@@ -88,6 +88,7 @@ export default function Dashboard({ searchQuery }) {
 
   const handleClearFilters = () => {
     setSearchParams(new URLSearchParams());
+    if (onClearSearch) onClearSearch();
   };
 
   const handleConfirmDelete = async () => {
@@ -331,6 +332,13 @@ export default function Dashboard({ searchQuery }) {
               {searchQuery && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-muted text-[12px]">
                   q: {searchQuery}
+                  <button
+                    type="button"
+                    onClick={() => onClearSearch && onClearSearch()}
+                    aria-label="Clear search"
+                  >
+                    <X className="w-3 h-3 text-muted hover:text-foreground" />
+                  </button>
                 </span>
               )}
               <button

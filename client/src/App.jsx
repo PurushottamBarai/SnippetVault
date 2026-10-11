@@ -38,7 +38,10 @@ export default function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <Dashboard searchQuery={searchQuery} />
+                <Dashboard
+                  searchQuery={searchQuery}
+                  onClearSearch={() => setSearchQuery('')}
+                />
               </ProtectedRoute>
             }
           />
