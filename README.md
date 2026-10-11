@@ -28,6 +28,7 @@ A modern, full-stack code snippet manager for developers with automated AI taggi
 ## Getting Started
 
 ### 1. Prerequisites
+
 - [Node.js](https://nodejs.org/) (v18+ recommended)
 - A MongoDB Atlas database connection URI
 - A free [Groq Cloud API Key](https://console.groq.com) or [Google Gemini API Key](https://aistudio.google.com/)
@@ -45,6 +46,7 @@ npm run install:all
 ### 3. Environment Setup
 
 #### Server Configuration (`server/.env`)
+
 Create a `.env` file inside the `server/` directory:
 
 ```env
@@ -58,6 +60,7 @@ NODE_ENV=development
 ```
 
 #### Client Configuration (`client/.env`)
+
 Create a `.env` file inside the `client/` directory (optional for local development):
 
 ```env

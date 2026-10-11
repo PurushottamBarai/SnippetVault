@@ -4,6 +4,13 @@ import crypto from 'crypto';
 import { User } from '../models/User.js';
 import { Snippet } from '../models/Snippet.js';
 import { sendPasswordResetEmail } from '../services/email.service.js';
+import {
+  getGitHubAuthUrl,
+  exchangeGitHubCode,
+  getGoogleAuthUrl,
+  exchangeGoogleCode,
+  findOrCreateOAuthUser
+} from '../services/oauth.service.js';
 
 const COOKIE_NAME = 'token';
 const JWT_EXPIRES_IN = '7d';
@@ -190,5 +197,71 @@ export async function resetPassword(req, res, next) {
     return res.status(200).json({ message: 'Password has been reset successfully.' });
   } catch (error) {
     next(error);
+  }
+}
+
+function getCallbackUrl(req, provider) {
+  const host = req.get('host');
+  const protocol = req.protocol === 'https' || req.get('x-forwarded-proto') === 'https' ? 'https' : 'http';
+  return `${protocol}://${host}/api/auth/${provider}/callback`;
+}
+
+function getClientRedirectBase(req) {
+  return process.env.CLIENT_URL || (req.get('host') ? `https://${req.get('host')}` : 'http://localhost:5173');
+}
+
+export async function githubRedirect(req, res) {
+  try {
+    const callbackUrl = getCallbackUrl(req, 'github');
+    const url = getGitHubAuthUrl(callbackUrl);
+    return res.redirect(url);
+  } catch (err) {
+    const clientUrl = getClientRedirectBase(req);
+    return res.redirect(`${clientUrl}/login?error=oauth_unconfigured`);
+  }
+}
+
+export async function githubCallback(req, res) {
+  try {
+    const { code, error } = req.query;
+    if (error || !code) throw new Error(error || 'Authorization code missing');
+    const callbackUrl = getCallbackUrl(req, 'github');
+    const profile = await exchangeGitHubCode(code, callbackUrl);
+    const user = await findOrCreateOAuthUser(profile);
+    const token = generateToken(user._id);
+    setAuthCookie(res, token);
+    const clientUrl = getClientRedirectBase(req);
+    return res.redirect(`${clientUrl}/dashboard`);
+  } catch (err) {
+    const clientUrl = getClientRedirectBase(req);
+    return res.redirect(`${clientUrl}/login?error=oauth_failed`);
+  }
+}
+
+export async function googleRedirect(req, res) {
+  try {
+    const callbackUrl = getCallbackUrl(req, 'google');
+    const url = getGoogleAuthUrl(callbackUrl);
+    return res.redirect(url);
+  } catch (err) {
+    const clientUrl = getClientRedirectBase(req);
+    return res.redirect(`${clientUrl}/login?error=oauth_unconfigured`);
+  }
+}
+
+export async function googleCallback(req, res) {
+  try {
+    const { code, error } = req.query;
+    if (error || !code) throw new Error(error || 'Authorization code missing');
+    const callbackUrl = getCallbackUrl(req, 'google');
+    const profile = await exchangeGoogleCode(code, callbackUrl);
+    const user = await findOrCreateOAuthUser(profile);
+    const token = generateToken(user._id);
+    setAuthCookie(res, token);
+    const clientUrl = getClientRedirectBase(req);
+    return res.redirect(`${clientUrl}/dashboard`);
+  } catch (err) {
+    const clientUrl = getClientRedirectBase(req);
+    return res.redirect(`${clientUrl}/login?error=oauth_failed`);
   }
 }

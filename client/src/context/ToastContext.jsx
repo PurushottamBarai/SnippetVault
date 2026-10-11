@@ -24,12 +24,12 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-[360px] w-full pointer-events-none">
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-90 w-full pointer-events-none">
         {toasts.map((toast) => (
           <div
             key={toast.id}
             role="status"
-            className="pointer-events-auto flex items-center justify-between gap-3 p-3.5 rounded-[8px] border border-border bg-card text-foreground shadow-lg text-[13px] animate-in fade-in slide-in-from-bottom-2 duration-150"
+            className="pointer-events-auto flex items-center justify-between gap-3 p-3.5 rounded-lg border border-border bg-card text-foreground shadow-lg text-[13px] animate-in fade-in slide-in-from-bottom-2 duration-150"
           >
             <div className="flex items-center gap-2.5">
               {toast.type === 'success' && <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />}

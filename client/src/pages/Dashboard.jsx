@@ -427,7 +427,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
                     type="button"
                     onClick={() => fetchSnippets(page + 1, true)}
                     disabled={loadingMore}
-                    className="h-[36px] px-5 border border-strong bg-card text-foreground text-[13px] font-medium rounded-[6px] hover:bg-muted transition-colors disabled:opacity-50"
+                    className="h-9 px-5 border border-strong bg-card text-foreground text-[13px] font-medium rounded-md hover:bg-muted transition-colors disabled:opacity-50"
                   >
                     {loadingMore ? 'Loading more...' : 'Load more snippets'}
                   </button>

@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Code2, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import OAuthButtons from '../components/OAuthButtons';
 
 export default function Login() {
   const { login } = useAuth();
@@ -13,9 +14,15 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(
-    location.search.includes('expired=true') ? 'Your session expired. Log in again.' : ''
-  );
+
+  const getInitialError = () => {
+    if (location.search.includes('expired=true')) return 'Your session expired. Log in again.';
+    if (location.search.includes('error=oauth_failed')) return 'Social sign-in was canceled or failed. Please try again.';
+    if (location.search.includes('error=oauth_unconfigured')) return 'OAuth credentials are not configured yet.';
+    return '';
+  };
+
+  const [error, setError] = useState(getInitialError);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -84,6 +91,8 @@ export default function Login() {
               <span>{error}</span>
             </div>
           )}
+
+          <OAuthButtons />
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>

@@ -1,6 +1,18 @@
 import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
-import { register, login, logout, getMe, deleteAccount, forgotPassword, resetPassword } from '../controllers/auth.controller.js';
+import {
+  register,
+  login,
+  logout,
+  getMe,
+  deleteAccount,
+  forgotPassword,
+  resetPassword,
+  githubRedirect,
+  githubCallback,
+  googleRedirect,
+  googleCallback
+} from '../controllers/auth.controller.js';
 import { authMiddleware } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 import { registerSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema } from '../validators/auth.schema.js';
@@ -22,5 +34,10 @@ router.get('/me', authMiddleware, getMe);
 router.delete('/account', authMiddleware, deleteAccount);
 router.post('/forgot-password', authLimiter, validate(forgotPasswordSchema), forgotPassword);
 router.post('/reset-password/:token', authLimiter, validate(resetPasswordSchema), resetPassword);
+
+router.get('/github', githubRedirect);
+router.get('/github/callback', githubCallback);
+router.get('/google', googleRedirect);
+router.get('/google/callback', googleCallback);
 
 export default router;

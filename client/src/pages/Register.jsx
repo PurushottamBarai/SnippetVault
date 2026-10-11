@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Code2, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import OAuthButtons from '../components/OAuthButtons';
 
 export default function Register() {
   const { register } = useAuth();
@@ -76,6 +77,8 @@ export default function Register() {
               <span>{error}</span>
             </div>
           )}
+
+          <OAuthButtons />
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
