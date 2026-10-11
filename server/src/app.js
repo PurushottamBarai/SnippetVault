@@ -17,7 +17,9 @@ const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || origin === allowedOrigin || process.env.NODE_ENV !== 'production') {
+      const isVercelDomain = origin && origin.endsWith('.vercel.app');
+      const isVercelEnvUrl = process.env.VERCEL_URL && origin === `https://${process.env.VERCEL_URL}`;
+      if (!origin || origin === allowedOrigin || isVercelDomain || isVercelEnvUrl || process.env.NODE_ENV !== 'production') {
         callback(null, true);
       } else {
         callback(new Error('Blocked by CORS policy'));
