@@ -87,7 +87,7 @@ export default function SnippetDetail() {
   });
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-8">
+    <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-8 flex-1">
       <nav className="flex items-center gap-1.5 text-[12px] text-muted mb-4 font-mono">
         <Link to="/dashboard" className="hover:text-foreground">
           Snippets

@@ -145,7 +145,7 @@ export default function SnippetEdit() {
   const lines = (content || '').split('\n');
 
   return (
-    <div className="max-w-300 mx-auto px-4 sm:px-6 py-8" onKeyDown={handleKeyDown}>
+    <div className="w-full max-w-300 mx-auto px-4 sm:px-6 py-8 flex-1" onKeyDown={handleKeyDown}>
       <div className="flex items-center gap-2 mb-6">
         <Link
           to={`/snippets/${id}`}

@@ -51,7 +51,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
+    <div className="w-full max-w-3xl mx-auto px-4 py-8 flex-1">
       <div className="mb-8 text-center sm:text-left">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Contact Us</h1>
         <p className="text-muted mt-2 text-sm sm:text-base">

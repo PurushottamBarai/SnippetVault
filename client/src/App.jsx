@@ -23,8 +23,6 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isAppWorkspace = location.pathname === '/dashboard' || location.pathname.startsWith('/snippets');
-
   const handleSearchChange = (val) => {
     setSearchQuery(val);
     if (location.pathname !== '/dashboard') {
@@ -35,7 +33,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar searchQuery={searchQuery} onSearchChange={handleSearchChange} />
-      <main className="flex-1 flex flex-col">
+      <div className="flex-1 w-full flex flex-col">
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
@@ -83,8 +81,8 @@ export default function App() {
           />
           <Route path="*" element={<Landing />} />
         </Routes>
-      </main>
-      {!isAppWorkspace && <Footer />}
+      </div>
+      <Footer />
       <Analytics />
     </div>
   );

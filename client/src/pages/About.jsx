@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function About() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="w-full max-w-4xl mx-auto px-4 py-8 flex-1">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">About DevVault</h1>
         <p className="text-muted mt-2 text-base">
@@ -20,28 +20,28 @@ export default function About() {
 
         <section className="grid sm:grid-cols-2 gap-4">
           <div className="bg-card border border-border rounded-lg p-6">
-            <h3 className="font-semibold text-foreground mb-2">⚡ Lightning Fast Organization</h3>
+            <h3 className="font-semibold text-foreground mb-2">Lightning Fast Organization</h3>
             <p className="text-muted text-sm">
               Tag, filter, and search across languages seamlessly with zero clutter. Find whatever solution you need in milliseconds.
             </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6">
-            <h3 className="font-semibold text-foreground mb-2">🤖 AI-Powered Intelligence</h3>
+            <h3 className="font-semibold text-foreground mb-2"> AI-Powered Intelligence</h3>
             <p className="text-muted text-sm">
               Integrated with Google Gemini to auto-suggest relevant tags and provide instant, accurate explanations for complex code fragments.
             </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6">
-            <h3 className="font-semibold text-foreground mb-2">🔒 Secure & Seamless Auth</h3>
+            <h3 className="font-semibold text-foreground mb-2"> Secure & Seamless Auth</h3>
             <p className="text-muted text-sm">
               Effortless single sign-on with GitHub and Google OAuth alongside traditional password authentication.
             </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6">
-            <h3 className="font-semibold text-foreground mb-2">💻 Developer-First UI</h3>
+            <h3 className="font-semibold text-foreground mb-2"> Developer-First UI</h3>
             <p className="text-muted text-sm">
               Engineered with a high-contrast dark theme, monospace syntax support, and keyboard-friendly navigation.
             </p>

@@ -142,7 +142,7 @@ export default function SnippetNew() {
 
   return (
     <div
-      className="max-w-300 mx-auto px-4 sm:px-6 py-8"
+      className="w-full max-w-300 mx-auto px-4 sm:px-6 py-8 flex-1"
       onKeyDown={handleKeyDown}
     >
       <div className="flex items-center justify-between mb-6">

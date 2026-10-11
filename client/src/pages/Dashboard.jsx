@@ -114,8 +114,8 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
   });
 
   return (
-    <div className="max-w-300 mx-auto px-4 sm:px-6 py-6 min-h-[calc(100vh-56px)]">
-      <div className="flex flex-col lg:flex-row gap-6">
+    <div className="w-full max-w-300 mx-auto px-4 sm:px-6 py-6 flex-1 flex flex-col">
+      <div className="flex flex-col lg:flex-row gap-6 flex-1">
         <aside className="hidden lg:block w-60 shrink-0 space-y-6 pr-6 border-r border-border">
           <div>
             <div className="text-[11px] font-mono uppercase text-muted tracking-wider font-semibold mb-2">
@@ -242,7 +242,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
           </div>
         )}
 
-        <main className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border mb-6">
             <div>
               <h1 className="text-[20px] font-bold text-foreground tracking-tight">
@@ -435,7 +435,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
               )}
             </>
           )}
-        </main>
+        </div>
       </div>
 
       <ConfirmDialog
