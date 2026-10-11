@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes.js';
 import snippetRoutes from './routes/snippet.routes.js';
+import contactRoutes from './routes/contact.routes.js';
 import { errorHandler } from './middleware/error.js';
 
 dotenv.config();
@@ -41,6 +42,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/snippets', snippetRoutes);
+app.use('/api/contact', contactRoutes);
 
 app.use(errorHandler);
 

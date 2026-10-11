@@ -108,14 +108,6 @@ export default function Landing() {
           </div>
         </div>
       </div>
-
-      <footer className="border-t border-border mt-16 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-muted">
-        <div>Developer Snippet Vault &copy; 2026. Built with React, Express and Google Gemini.</div>
-        <div className="flex items-center gap-4">
-          <Link to="/login" className="hover:text-foreground">Log in</Link>
-          <Link to="/register" className="hover:text-foreground">Sign up</Link>
-        </div>
-      </footer>
     </div>
   );
 }
