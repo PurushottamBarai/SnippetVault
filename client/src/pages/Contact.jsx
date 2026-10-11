@@ -119,56 +119,65 @@ export default function Contact() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
                 <div className="p-3 text-sm bg-destructive/10 border border-destructive/20 text-destructive rounded-md">
                   {error}
                 </div>
               )}
 
-              <div>
-                <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-1">
-                  Name <span className="text-primary">*</span>
-                </label>
+              <div className="relative pt-1">
                 <input
                   id="contact-name"
                   type="text"
                   required
-                  placeholder="Your full name"
+                  placeholder=" "
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 bg-background border border-border rounded-md text-foreground placeholder:text-muted/60 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="peer w-full px-3.5 py-2.5 bg-transparent border border-border rounded-md text-foreground text-sm focus:outline-none focus:border-primary transition-colors"
                 />
+                <label
+                  htmlFor="contact-name"
+                  className="absolute left-3 px-1.5 bg-card text-xs transition-all pointer-events-none -top-1.5 text-muted peer-focus:text-primary peer-focus:-top-1.5 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-muted peer-focus:peer-placeholder-shown:-top-1.5 peer-focus:peer-placeholder-shown:text-xs"
+                >
+                  Name <span className="text-primary">*</span>
+                </label>
               </div>
 
-              <div>
-                <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-1">
-                  Email <span className="text-primary">*</span>
-                </label>
+              <div className="relative pt-1">
                 <input
                   id="contact-email"
                   type="email"
                   required
-                  placeholder="your.email@example.com"
+                  placeholder=" "
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2 bg-background border border-border rounded-md text-foreground placeholder:text-muted/60 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="peer w-full px-3.5 py-2.5 bg-transparent border border-border rounded-md text-foreground text-sm focus:outline-none focus:border-primary transition-colors"
                 />
+                <label
+                  htmlFor="contact-email"
+                  className="absolute left-3 px-1.5 bg-card text-xs transition-all pointer-events-none -top-1.5 text-muted peer-focus:text-primary peer-focus:-top-1.5 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-muted peer-focus:peer-placeholder-shown:-top-1.5 peer-focus:peer-placeholder-shown:text-xs"
+                >
+                  Email <span className="text-primary">*</span>
+                </label>
               </div>
 
-              <div>
-                <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-1">
-                  Message <span className="text-primary">*</span>
-                </label>
+              <div className="relative pt-1">
                 <textarea
                   id="contact-message"
                   required
                   rows={5}
-                  placeholder="How can we help you?"
+                  placeholder=" "
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-3 py-2 bg-background border border-border rounded-md text-foreground placeholder:text-muted/60 text-sm focus:outline-none focus:ring-1 focus:ring-primary resize-none"
+                  className="peer w-full px-3.5 py-3 bg-transparent border border-border rounded-md text-foreground text-sm focus:outline-none focus:border-primary transition-colors resize-none"
                 />
+                <label
+                  htmlFor="contact-message"
+                  className="absolute left-3 px-1.5 bg-card text-xs transition-all pointer-events-none -top-1.5 text-muted peer-focus:text-primary peer-focus:-top-1.5 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:text-muted peer-focus:peer-placeholder-shown:-top-1.5 peer-focus:peer-placeholder-shown:text-xs"
+                >
+                  Message <span className="text-primary">*</span>
+                </label>
               </div>
 
               <button
