@@ -201,8 +201,12 @@ export async function resetPassword(req, res, next) {
 }
 
 function getCallbackUrl(req, provider) {
+  if (process.env.CLIENT_URL) {
+    return `${process.env.CLIENT_URL.replace(/\/+$/, '')}/api/auth/${provider}/callback`;
+  }
+  const proto = req.get('x-forwarded-proto') || req.protocol || 'http';
+  const protocol = proto.includes('https') ? 'https' : 'http';
   const host = req.get('host');
-  const protocol = req.protocol === 'https' || req.get('x-forwarded-proto') === 'https' ? 'https' : 'http';
   return `${protocol}://${host}/api/auth/${provider}/callback`;
 }
 
