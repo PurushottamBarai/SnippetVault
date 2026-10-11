@@ -21,7 +21,6 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
   const { showToast } = useToast();
 
   const selectedLanguage = searchParams.get('language') || 'all';
-  const selectedTag = searchParams.get('tag') || 'all';
   const sortBy = searchParams.get('sort') || 'newest';
 
   const [snippets, setSnippets] = useState([]);
@@ -46,7 +45,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
           limit: 20,
           q: searchQuery || undefined,
           language: selectedLanguage !== 'all' ? selectedLanguage : undefined,
-          tag: selectedTag !== 'all' ? selectedTag : undefined
+          tag: (searchParams.get('tag') || 'all') !== 'all' ? searchParams.get('tag') || 'all' : undefined
         };
 
         const res = await api.get('/snippets', { params });
@@ -68,7 +67,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
         setLoadingMore(false);
       }
     },
-    [searchQuery, selectedLanguage, selectedTag, showToast]
+    [searchQuery, selectedLanguage, (searchParams.get('tag') || 'all'), showToast]
   );
 
   useEffect(() => {
@@ -115,9 +114,9 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
   });
 
   return (
-    <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-6 min-h-[calc(100vh-56px)]">
+    <div className="max-w-300 mx-auto px-4 sm:px-6 py-6 min-h-[calc(100vh-56px)]">
       <div className="flex flex-col lg:flex-row gap-6">
-        <aside className="hidden lg:block w-[240px] shrink-0 space-y-6 pr-6 border-r border-border">
+        <aside className="hidden lg:block w-60 shrink-0 space-y-6 pr-6 border-r border-border">
           <div>
             <div className="text-[11px] font-mono uppercase text-muted tracking-wider font-semibold mb-2">
               Languages
@@ -126,7 +125,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
               <button
                 type="button"
                 onClick={() => updateParam('language', 'all')}
-                className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[6px] text-[13px] transition-colors ${
+                className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-[13px] transition-colors ${
                   selectedLanguage === 'all'
                     ? 'bg-accent text-accent-foreground font-medium'
                     : 'text-foreground hover:bg-muted'
@@ -143,7 +142,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
                     key={lang}
                     type="button"
                     onClick={() => updateParam('language', lang)}
-                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[6px] text-[13px] transition-colors ${
+                    className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-[13px] transition-colors ${
                       selectedLanguage.toLowerCase() === lang.toLowerCase()
                         ? 'bg-accent text-accent-foreground font-medium'
                         : 'text-foreground hover:bg-muted'
@@ -172,13 +171,13 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
             ) : (
               <div className="flex flex-wrap gap-1.5">
                 {Object.entries(stats.tags).map(([tag, count]) => {
-                  const isActive = selectedTag.toLowerCase() === tag.toLowerCase();
+                  const isActive = (searchParams.get('tag') || 'all').toLowerCase() === tag.toLowerCase();
                   return (
                     <button
                       key={tag}
                       type="button"
                       onClick={() => updateParam('tag', isActive ? 'all' : tag)}
-                      className={`inline-flex items-center gap-1 h-[22px] px-2 text-[12px] font-mono rounded-[4px] transition-colors ${
+                      className={`inline-flex items-center gap-1 h-5.5 px-2 text-[12px] font-mono rounded-sm transition-colors ${
                         isActive
                           ? 'bg-primary text-primary-foreground font-medium'
                           : 'bg-muted text-muted hover:text-foreground hover:bg-neutral-200 dark:hover:bg-neutral-800'
@@ -196,7 +195,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
 
         {mobileFilterOpen && (
           <div className="fixed inset-0 z-50 flex lg:hidden bg-black/50">
-            <div className="w-[280px] bg-card h-full p-6 space-y-6 overflow-y-auto border-r border-border">
+            <div className="w-70 bg-card h-full p-6 space-y-6 overflow-y-auto border-r border-border">
               <div className="flex items-center justify-between">
                 <span className="font-semibold text-[15px]">Filters</span>
                 <button
@@ -219,7 +218,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
                       updateParam('language', 'all');
                       setMobileFilterOpen(false);
                     }}
-                    className="w-full text-left px-2.5 py-1.5 text-[13px] rounded-[6px] hover:bg-muted"
+                    className="w-full text-left px-2.5 py-1.5 text-[13px] rounded-md hover:bg-muted"
                   >
                     All ({stats.totalAll || 0})
                   </button>
@@ -231,7 +230,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
                         updateParam('language', lang);
                         setMobileFilterOpen(false);
                       }}
-                      className="w-full text-left px-2.5 py-1.5 text-[13px] rounded-[6px] hover:bg-muted flex items-center justify-between"
+                      className="w-full text-left px-2.5 py-1.5 text-[13px] rounded-md hover:bg-muted flex items-center justify-between"
                     >
                       <span>{getLanguageInfo(lang).label}</span>
                       <span className="font-mono text-[12px] text-muted">{count}</span>
@@ -251,7 +250,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
               </h1>
               <p className="text-[13px] text-muted">
                 {total} {total === 1 ? 'snippet' : 'snippets'}
-                {(selectedLanguage !== 'all' || selectedTag !== 'all' || searchQuery) && (
+                {(selectedLanguage !== 'all' || (searchParams.get('tag') || 'all') !== 'all' || searchQuery) && (
                   <span> • filtered</span>
                 )}
               </p>
@@ -261,7 +260,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
               <button
                 type="button"
                 onClick={() => setMobileFilterOpen(true)}
-                className="lg:hidden h-[36px] px-3 border border-border rounded-[6px] text-[13px] flex items-center gap-1.5 text-foreground bg-card"
+                className="lg:hidden h-9 px-3 border border-border rounded-md text-[13px] flex items-center gap-1.5 text-foreground bg-card"
               >
                 <Filter className="w-4 h-4" />
                 <span>Filters</span>
@@ -270,14 +269,14 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
               <select
                 value={sortBy}
                 onChange={(e) => updateParam('sort', e.target.value)}
-                className="h-[36px] px-2.5 text-[13px] bg-card border border-strong rounded-[6px] text-foreground focus:outline-none focus:border-primary"
+                className="h-9 px-2.5 text-[13px] bg-card border border-strong rounded-md text-foreground focus:outline-none focus:border-primary"
               >
                 <option value="newest">Newest first</option>
                 <option value="oldest">Oldest first</option>
                 <option value="alpha">Title A-Z</option>
               </select>
 
-              <div className="hidden sm:flex items-center border border-strong rounded-[6px] overflow-hidden">
+              <div className="hidden sm:flex items-center border border-strong rounded-md overflow-hidden">
                 <button
                   type="button"
                   onClick={() => setViewMode('grid')}
@@ -302,7 +301,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
 
               <Link
                 to="/snippets/new"
-                className="h-[36px] px-3.5 inline-flex items-center gap-1.5 bg-primary text-primary-foreground text-[13px] font-medium rounded-[6px] hover:opacity-90 transition-opacity"
+                className="h-9 px-3.5 inline-flex items-center gap-1.5 bg-primary text-primary-foreground text-[13px] font-medium rounded-md hover:opacity-90 transition-opacity"
               >
                 <Plus className="w-4 h-4" />
                 <span>New snippet</span>
@@ -310,27 +309,27 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
             </div>
           </div>
 
-          {(selectedLanguage !== 'all' || selectedTag !== 'all' || searchQuery) && (
+          {(selectedLanguage !== 'all' || (searchParams.get('tag') || 'all') !== 'all' || searchQuery) && (
             <div className="flex items-center gap-2 mb-6 flex-wrap">
               <span className="text-[12px] text-muted">Active filters:</span>
               {selectedLanguage !== 'all' && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-muted text-[12px]">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-muted text-[12px]">
                   lang: {selectedLanguage}
                   <button type="button" onClick={() => updateParam('language', 'all')}>
                     <X className="w-3 h-3 text-muted hover:text-foreground" />
                   </button>
                 </span>
               )}
-              {selectedTag !== 'all' && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-muted text-[12px]">
-                  #{selectedTag}
+              {(searchParams.get('tag') || 'all') !== 'all' && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-muted text-[12px]">
+                  #{searchParams.get('tag') || 'all'}
                   <button type="button" onClick={() => updateParam('tag', 'all')}>
                     <X className="w-3 h-3 text-muted hover:text-foreground" />
                   </button>
                 </span>
               )}
               {searchQuery && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[4px] bg-muted text-[12px]">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm bg-muted text-[12px]">
                   q: {searchQuery}
                   <button
                     type="button"
@@ -356,7 +355,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
               {[1, 2, 3, 4, 5, 6].map((n) => (
                 <div
                   key={n}
-                  className="h-48 border border-border rounded-[8px] bg-card p-4 animate-pulse space-y-3"
+                  className="h-48 border border-border rounded-lg bg-card p-4 animate-pulse space-y-3"
                 >
                   <div className="h-4 bg-muted rounded w-2/3" />
                   <div className="h-3 bg-muted rounded w-1/3" />
@@ -366,7 +365,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
             </div>
           ) : sortedSnippets.length === 0 ? (
             <div className="text-center py-16 border border-dashed border-border rounded-[10px] bg-surface p-8">
-              <div className="w-10 h-10 mx-auto rounded-[8px] border border-border flex items-center justify-center text-muted mb-3">
+              <div className="w-10 h-10 mx-auto rounded-lg border border-border flex items-center justify-center text-muted mb-3">
                 <FileCode2 className="w-5 h-5" />
               </div>
               {stats.totalAll === 0 ? (
@@ -379,7 +378,7 @@ export default function Dashboard({ searchQuery, onClearSearch }) {
                   </p>
                   <Link
                     to="/snippets/new"
-                    className="inline-flex items-center gap-1.5 h-[36px] px-4 bg-primary text-primary-foreground text-[13px] font-medium rounded-[6px]"
+                    className="inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-primary-foreground text-[13px] font-medium rounded-md"
                   >
                     <Plus className="w-4 h-4" />
                     New snippet

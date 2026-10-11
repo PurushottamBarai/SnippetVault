@@ -11,6 +11,7 @@ import SnippetEdit from './pages/SnippetEdit';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import ProtectedRoute from './routes/ProtectedRoute';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -72,6 +73,7 @@ export default function App() {
           <Route path="*" element={<Landing />} />
         </Routes>
       </div>
+      <Analytics />
     </div>
   );
 }

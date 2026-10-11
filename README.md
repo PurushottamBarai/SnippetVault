@@ -2,7 +2,7 @@
 
 A modern, full-stack code snippet manager for developers with automated AI tagging, summaries, and instant search.
 
-**Live Demo:** [https://devvault-app-blond.vercel.app](https://devvault-app-blond.vercel.app/)
+**Live Demo:** [snippetvault-pi.vercel.app](https://snippetvault-pi.vercel.app/)
 
 ---
 
